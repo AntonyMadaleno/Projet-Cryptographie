@@ -1,11 +1,27 @@
 *
 {
     font-family: system-ui;
+    scrollbar-3dlight-color: #fd501d;
 }
 
 body
 {
     background-color: #404850;
+    scrollbar-width: thin;
+}
+
+body::-webkit-scrollbar
+{
+    width: 6px;
+    background: linear-gradient(20deg, rgba(141,58,180,1) 0%, rgba(253,80,29,1) 58%, rgba(252,234,69,1) 84%);
+}
+
+body::-webkit-scrollbar-thumb
+{
+    width: 6px;
+    background-color: #353b42;
+    box-shadow: 0 0 5px #fd501d;
+    border-radius: 6px;
 }
 
 nav
