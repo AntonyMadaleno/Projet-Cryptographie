@@ -22,7 +22,7 @@ footer
 {
     background: linear-gradient(90deg, rgba(141,58,180,1) 0%, rgba(253,80,29,1) 58%, rgba(252,234,69,1) 84%);
     position: absolute;
-    bottom: 0px;
+    bottom: -140px;
     left: 0px;
     right: 0px;
     text-align: center;
@@ -59,12 +59,40 @@ footer a:hover
 
 .main_frame
 {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
     position: absolute;
     top: 60px;
-    left: 50px;
-    right: 50px;
-    height: calc(100% - 120px);
+    left: 60px;
+    right: 60px;
+    height: 100%;
+    padding: 10px;
     background: #353b42;
     border-radius: 20px;
     box-shadow: 0 0 5px black;
+}
+
+.card
+{
+    position: relative;
+    width: 90px;
+    height: 125px;
+    margin: 10px;
+    padding: 1px;
+    background-color: #252525;
+    border-radius: 10px;
+    border: 1px solid rgb(141,58,180);
+    box-shadow: 0 0 5px rgb(158, 124, 32);
+    cursor: pointer;
+    overflow: hidden;
+    transition-duration: 600ms;
+}
+
+
+
+.card:hover
+{
+    border-color: rgb(158, 124, 32);
+    box-shadow: 0 0 5px rgb(141,58,180);
 }
