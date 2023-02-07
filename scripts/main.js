@@ -188,7 +188,25 @@ function loadCards()
         cards.push( document.createElement("div") );
         card_states.push(-1);
         cards[i].setAttribute("class", "card");
-        cards[i].style.backgroundImage = "url('" + "nope.jpg" + "')";
+
+        let url = "assets/";
+
+        if (i < 13)
+            url += "T" + (i + 1);
+        
+        if (i >= 13 && i < 26)
+            url += "C" + ( (i % 13) + 1 );
+        
+        if (i >= 26 && i < 39)
+            url += "H" + ( (i % 13) + 1 );
+
+        if (i >= 39 && i < 52)
+            url += "P" + ( (i % 13) + 1 );
+        
+        if (i >= 52)
+            url += "J" + (i - 51);
+
+        cards[i].style.backgroundImage = "url('" + url + ".jpg')";
         elm_card_container.appendChild(cards[i]);
 
         cards[i].addEventListener("click", card_click );
