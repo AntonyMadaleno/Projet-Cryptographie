@@ -14,14 +14,22 @@
 
 </head>
 
-<body onload="loadCards()">
+<body onload="load()">
 
     <footer>
-        <a href="https://github.com/AntonyMadaleno">Antony Madaleno</a>
+        <p>
+            <a href="https://github.com/AntonyMadaleno">Antony Madaleno</a>
+            <span style="color: #fd501d"> / </span>
+            <a href="https://github.com/oxydevvv">Quentin Isoard</a>
+        </p>
     </footer>
 
     <nav>
-        
+        <div class="button" onclick="genRandom()">RANDOM</div>
+        <div class="button" onclick="openSubmit()">SUBMIT TEXT</div>
+        <div class="button" onclick="saveDeck()">SAVE DECK</div>
+        <div class="button" onclick="loadDeck()">LOAD DECK</div>
+        <div class="button" onclick="empty()">EMPTY </div>
     </nav>
 
     <div class="main_frame" id="card_display">
