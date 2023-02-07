@@ -26,13 +26,24 @@
 
     <nav>
         <div class="button" onclick="genRandom()">RANDOM</div>
-        <div class="button" onclick="openSubmit()">SUBMIT TEXT</div>
-        <div class="button" onclick="saveDeck()">SAVE DECK</div>
-        <div class="button" onclick="loadDeck()">LOAD DECK</div>
+        <div class="button" onclick="openSubmit()">OPEN EDITOR</div>
+        <div class="button" onclick="saveDeck()">VALIDATE</div>
+        <div class="button" onclick="loadDeck()">RELOAD</div>
         <div class="button" onclick="empty()">EMPTY </div>
     </nav>
 
     <div class="main_frame" id="card_display">
+
+    </div>
+
+    <div class="editor">
+
+        <div class="textarea" id ="input"></div>
+
+        <div class="textarea" id ="output"></div>
+
+        <div class="button" onclick="encode()"> ENCODE </div>
+        <div class="button" onclick="decode()"> DECODE </div>
 
     </div>
 

@@ -39,7 +39,7 @@ nav
     box-shadow: 0 0 5px black;
 }
 
-nav .button
+.button
 {
     margin: 10px;
     border-radius: 10px;
@@ -50,12 +50,12 @@ nav .button
     box-shadow: 0 0 5px black;
     color: #f1f1f1;
     cursor: pointer;
-    min-width: 125px;
+    width: 125px;
     text-align: center;
     transition-duration: 500ms;
 }
 
-nav .button:hover
+.button:hover
 {
     border-color: rgb(141,58,180);
     color:rgb(252, 234, 69);
@@ -154,4 +154,40 @@ footer a:hover
 .card:hover
 {
     border-color: rgb(158, 124, 32);
+}
+
+.editor
+{
+    visibility: hidden;
+    position: absolute;
+    top: 75px;
+    bottom: 75px;
+    left: 150px;
+    right: 150px;
+    background: linear-gradient(90deg, rgba(24,29,40,0.6) 0%, rgba(30,30,30,0.6) 58%, rgba(33,29,24,0.6) 84%);
+    border-radius: 20px;
+    border: 1px solid #252525;
+    box-shadow: 0 0 5px black;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.textarea
+{
+    position: relative;
+    margin: 15px 10px 5px 10px;
+    padding: 10px;
+    width: calc(100% - 60px);
+    height: calc(50% - 70px);
+    background: rgba(200, 200, 200, 0.5);
+    color: #121212;
+    border-radius: 10px;
+}
+
+#input:focus
+{
+    outline: none;
+    background: rgba(225, 225, 225, 0.5);
 }

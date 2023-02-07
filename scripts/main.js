@@ -4,6 +4,63 @@ let card_deck = new Array(54);
 let char = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
 let indeck = 0;
 
+let saved_deck;
+
+function openSubmit()
+{
+    let editor = document.getElementsByClassName("editor")[0];
+
+    if (editor.style.visibility == "visible")
+    {
+        document.getElementsByClassName("button")[1].innerHTML = "OPEN EDITOR";
+        editor.style.visibility = "hidden";
+    }
+    else
+    {
+        document.getElementsByClassName("button")[1].innerHTML = "CLOSE EDITOR";
+        editor.style.visibility = "visible";
+    }
+}
+
+function updateDeck()
+{
+    for (let j = 0; j < 54; j++)
+        card_deck[j] =  card_states.indexOf(j, 0);
+
+    let elm_card_container = document.getElementById("card_display");
+    elm_card_container.innerHTML = "";
+
+    for (let i = 0; i < 54; i++)
+    {
+        elm_card_container.appendChild( cards[card_deck[i]] );
+        cards[i].innerHTML = "";
+    }
+}
+
+function saveDeck()
+{
+    for (let j = 0; j < 54; j++)
+        card_deck[j] =  card_states.indexOf(j, 0);
+    
+    saved_deck = [...card_deck];
+
+    updateDeck();
+}
+
+function loadDeck()
+{
+    card_deck = [...saved_deck];
+
+    for (let j = 0; j < 54; j++)
+        card_states[j] =  card_deck.indexOf(j, 0);
+
+    for (let j = 0; j < 54; j++)
+        cards[j].innerHTML = card_states[j];
+
+    updateDeck();
+    
+}
+
 function genFlux()
 {
     //ETAPE 1
@@ -89,13 +146,19 @@ function genFlux()
 
 }
 
-function encode(word)
+function encode()
 {
+
+    if (saved_deck == undefined)
+        return;
+
+    let word = document.getElementById("input").innerHTML;
     let encoded = "";
 
     for (let i = 0; i < word.length; i++)
     {
         let k = genFlux();
+        updateDeck();
         let p = char.indexOf(word[i], 0);
         if (p >= 0)
             encoded += char[ (k + p) % 26 ];
@@ -103,16 +166,22 @@ function encode(word)
             encoded += word[i];
     }
 
+    document.getElementsByClassName("textarea")[1].innerHTML = encoded;
     return encoded;
 }
 
-function decode(word)
+function decode()
 {
+    if (saved_deck == undefined)
+        return;
+
+    let word = document.getElementById("input").innerHTML;
     let decoded = "";
 
     for (let i = 0; i < word.length; i++)
     {
         let k = genFlux();
+        updateDeck();
         let p = char.indexOf(word[i], 0);
         if (p >= 0)
             decoded += char[ (-k + p + 26) % 26 ];
@@ -120,6 +189,7 @@ function decode(word)
             decoded += word[i];
     }
 
+    document.getElementsByClassName("textarea")[1].innerHTML = decoded;
     return decoded;
 }
 
@@ -217,4 +287,7 @@ function loadCards()
 function load()
 {
     loadCards();
+
+    input = document.getElementsByClassName("textarea")[0];
+    input.contentEditable = "true";
 }
