@@ -1,6 +1,6 @@
 let cards = [];
 let card_states = [];
-let card_deck = new Array(54);
+let card_deck = [];
 let char = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
 let indeck = 0;
 
@@ -24,8 +24,8 @@ function openSubmit()
 
 function updateDeck()
 {
-    for (let j = 0; j < 54; j++)
-        card_deck[j] =  card_states.indexOf(j, 0);
+    for (let j = 0; j < card_deck.length; j++)
+        card_deck[j] =  card_states.indexOf(j);
 
     let elm_card_container = document.getElementById("card_display");
     elm_card_container.innerHTML = "";
@@ -57,60 +57,58 @@ function loadDeck()
     for (let j = 0; j < 54; j++)
         cards[j].innerHTML = card_states[j];
 
-    updateDeck();
-    
+    updateDeck();  
 }
 
-function genFlux()
+function etape1()
 {
     //ETAPE 1
-    let j0_pos = card_states[52];
+    let j0_pos = card_states[53];
 
     if (j0_pos < 53)
-        card_states[52] = card_states[52] + 1;
+        card_states[53]++;
     else
-        card_states[52] = 1;
+        card_states[53] = 1;
 
-
-    let tmp = -1; let it = 0;
-    while (tmp === -1 && it < 54)
+    let it = -1;
+    while (it < card_states.length)
     {
-        if (card_states[it] === card_states[52] && it != 52)
-        {
-            card_states[it] = j0_pos;
-            tmp = it;
-        }
         it++;
+        if (card_states[it] == card_states[53] && it != 53)
+            card_states[it] = j0_pos;
     }
+}
 
+function etape2()
+{
     //ETAPE 2
-    let j1_pos = card_states[53];
+    let j1_pos = card_states[52];
 
     for (let x = 0; x < 2; x++)
     {
-        if (j1_pos < 53)
-            card_states[53] = card_states[53] + 1;
+        if (j1_pos < 52)
+            card_states[52] = card_states[52] + 1;
         else
-            card_states[53] = 1;
+            card_states[52] = 1;
     }
-
-    tmp = -1; it = 0;
-    while (tmp === -1 && it < 54)
+    
+    let it = -1;
+    while (it < 54)
     {
-        if (card_states[it] === card_states[53] && it != 53)
-        {
-            card_states[it] = j1_pos;
-            tmp = it;
-        }
         it++;
+        if (card_states[it] === card_states[52] && it != 52)
+            card_states[it] = j1_pos;
     }
+}
 
+function etape3()
+{
     //ETAPE 3
     for (let j = 0; j < 54; j++)
         card_deck[j] = card_states.indexOf(j, 0);
 
-    j0_pos = card_states[52];
-    j1_pos = card_states[53];
+    j0_pos = card_states[53];
+    j1_pos = card_states[52];
 
     let f0 = Math.min(j0_pos, j1_pos);
     let f1 = Math.max(j0_pos, j1_pos);
@@ -121,13 +119,16 @@ function genFlux()
 
     card_deck = d2.concat(d1);
     card_deck = card_deck.concat(d0);
+}
 
+function etape4()
+{
     //ETAPE 4
     f0 = Math.min(card_deck[53] + 1, 53 );
 
     d0 = card_deck.slice(0, f0);
     d1 = card_deck.slice(f0, 53);
-    d2 = card_deck.slice(53);  
+    d2 = card_deck.slice(53, 54);  
     
     card_deck = d1.concat(d0);
     card_deck = card_deck.concat(d2);
@@ -137,12 +138,29 @@ function genFlux()
 
     for (let c = 0; c < 54; c++)
         cards[c].innerHTML = card_states[c];
+}
 
+function etape5()
+{
     //ETAPE 5
-    if ( card_deck[ card_deck[0] + 1 ] < 52 )
-        return card_deck[ card_deck[0] + 1 ]%26;
+    if ( card_deck[ (card_deck[0] + 1) % 53 ] < 52 )
+        return card_deck[ (card_deck[0] + 1) % 53 ]%26;
     else
         return genFlux();
+}
+
+function genFlux()
+{
+
+    etape1();
+    updateDeck();
+    etape2();
+    updateDeck();
+    etape3();
+    updateDeck();
+    etape4();
+    updateDeck();
+    return etape5();
 
 }
 
@@ -153,6 +171,7 @@ function encode()
         return;
 
     let word = document.getElementById("input").innerHTML;
+    word = word.toLowerCase();
     let encoded = "";
 
     for (let i = 0; i < word.length; i++)
@@ -177,6 +196,7 @@ function decode()
 
     let word = document.getElementById("input").innerHTML;
     let decoded = "";
+    word = word.toLowerCase();
 
     for (let i = 0; i < word.length; i++)
     {
@@ -195,6 +215,9 @@ function decode()
 
 function genRandom()
 {
+
+    empty();
+
     while (indeck < 54)
     {
         let i = Math.floor(Math.random() * 54);
@@ -203,9 +226,10 @@ function genRandom()
         {
             card_states[i] = indeck;
             indeck++;
-            cards[i].innerHTML = card_states[i];
         }
     }
+
+    updateDeck();
 }
 
 function empty()
@@ -218,7 +242,7 @@ function empty()
     indeck = 0;
 }
 
-function card_click()
+function cardClick()
 {
     let i = 0
     while (this != cards[i])
@@ -256,7 +280,9 @@ function loadCards()
     for (let i = 0; i < 54; i++)
     {
         cards.push( document.createElement("div") );
-        card_states.push(-1);
+        card_states.push(i);
+        card_deck.push(i);
+        indeck = i;
         cards[i].setAttribute("class", "card");
 
         let url = "assets/";
@@ -279,7 +305,7 @@ function loadCards()
         cards[i].style.backgroundImage = "url('" + url + ".jpg')";
         elm_card_container.appendChild(cards[i]);
 
-        cards[i].addEventListener("click", card_click );
+        cards[i].addEventListener("click", cardClick );
 
     }
 }
@@ -290,4 +316,11 @@ function load()
 
     input = document.getElementsByClassName("textarea")[0];
     input.contentEditable = "true";
+}
+
+function copyOutput()
+{
+    let text = document.getElementsByClassName("textarea")[1].innerHTML;
+    // Copy the text inside the text field
+    navigator.clipboard.writeText(text);
 }

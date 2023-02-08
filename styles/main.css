@@ -181,13 +181,17 @@ footer a:hover
     padding: 10px;
     width: calc(100% - 60px);
     height: calc(50% - 70px);
-    background: rgba(200, 200, 200, 0.5);
+    background-color: #f1f1f1;
     color: #121212;
     border-radius: 10px;
+    user-select: all;
+    transition-duration: 300ms;
+    overflow: auto;
 }
 
 #input:focus
 {
     outline: none;
-    background: rgba(225, 225, 225, 0.5);
+    background-color: #353b42;
+    color:#ed670e;
 }
